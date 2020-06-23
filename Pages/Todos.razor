@@ -5,7 +5,6 @@
 @using StateManagementWithFluxor.Store.State
 @using StateManagementWithFluxor.Services
 
-@inject HttpClient HttpClient
 @inject IState<TodosState> TodosState
 @inject StateFacade Facade
 
@@ -37,7 +36,7 @@ else if (TodosState.Value.HasCurrentErrors)
         <tbody>
             @foreach (var todo in TodosState.Value.CurrentTodos.Take(10))
             {
-                <tr>
+                <tr style="cursor: pointer;">
                     <td>@todo.Id</td>
                     <td>@todo.Title</td>
                     <td>@todo.Completed</td>

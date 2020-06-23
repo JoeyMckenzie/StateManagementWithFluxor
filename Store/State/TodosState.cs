@@ -3,16 +3,13 @@ using System.Collections.Generic;
 
 namespace StateManagementWithFluxor.Store.State
 {
-    public class TodosState
+    public class TodosState : RootState
     {
-        public TodosState(bool isLoading, string? currentErrorMessage, IEnumerable<TodoDto>? currentTodos) =>
-            (IsLoading, CurrentErrorMessage, CurrentTodos) = (isLoading, currentErrorMessage, currentTodos);
-
-        public bool IsLoading { get; }
-
-        public string? CurrentErrorMessage { get; }
-
-        public bool HasCurrentErrors => !string.IsNullOrWhiteSpace(CurrentErrorMessage);
+        public TodosState(bool isLoading, string? currentErrorMessage, IEnumerable<TodoDto>? currentTodos) 
+            : base(isLoading, currentErrorMessage)
+        {
+            CurrentTodos = currentTodos;
+        }
 
         public IEnumerable<TodoDto>? CurrentTodos { get; }
     }

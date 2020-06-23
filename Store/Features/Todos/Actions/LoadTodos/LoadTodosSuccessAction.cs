@@ -1,11 +1,11 @@
 ﻿using StateManagementWithFluxor.Models.Todos;
 using System.Collections.Generic;
 
-namespace StateManagementWithFluxor.Store.Features.Todos.Actions
+namespace StateManagementWithFluxor.Store.Features.Todos.Actions.LoadTodos
 {
     public class LoadTodosSuccessAction
     {
-        public LoadTodosSuccessAction(IEnumerable<TodoDto> todos) => 
+        public LoadTodosSuccessAction(IEnumerable<TodoDto> todos) =>
             Todos = todos;
 
         public IEnumerable<TodoDto> Todos { get; }

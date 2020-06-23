@@ -1,0 +1,28 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@page "/todos/{todoId}"
+
+@using StateManagementWithFluxor.Store.State
+@using StateManagementWithFluxor.Services
+
+@inject IState<TodosState> TodosState
+@inject StateFacade Facade
+
+<h3>Detail for todo item @TodoId</h3>
+
+@code {
+
+    [Parameter]
+    public int TodoId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => base.OnInitialized());
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+    }
+
+}
