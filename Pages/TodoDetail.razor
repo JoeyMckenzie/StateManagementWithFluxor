@@ -8,15 +8,56 @@
 @inject IState<TodosState> TodosState
 @inject StateFacade Facade
 
-<h3>Detail for todo item @TodoId</h3>
+<h3 class="text-center mb-3">Detail for todo item @TodoId</h3>
+
+@if (TodosState.Value.IsLoading)
+{
+    <div class="d-flex flex-row justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+}
+else if (TodosState.Value.HasCurrentErrors || TodosState.Value.CurrentTodo is null)
+{
+    <span>Whoops! Looks like an issue occurred loading todos :(</span>
+}
+else
+{
+    <div class="d-flex flex-column align-items-center justify-content-center py-1">
+        <div class="row">
+            <strong>ID</strong>: @TodosState.Value.CurrentTodo.Id
+        </div>
+        <div class="row">
+            <strong>Title</strong>: @TodosState.Value.CurrentTodo.Title
+        </div>
+        <div class="row">
+            <strong>Completed</strong>: @TodosState.Value.CurrentTodo.Completed
+        </div>
+        <div class="row">
+            <strong>User ID</strong>: @TodosState.Value.CurrentTodo.UserId
+        </div>
+
+        <div class="py-3">
+            <a class="btn btn-primary" href="/todos">Back to Todos</a>
+        </div>
+    </div>
+
+}
 
 @code {
 
     [Parameter]
-    public int TodoId { get; set; }
+    public string? TodoId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        // Load the todo detail on initial page navigation
+        if (int.TryParse(TodoId, out var parsedId))
+        {
+            Facade.LoadTodoById(parsedId);
+        }
+
         await Task.Run(() => base.OnInitialized());
     }
 

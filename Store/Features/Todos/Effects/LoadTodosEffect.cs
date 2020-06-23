@@ -1,4 +1,5 @@
-﻿using Fluxor;
+﻿
+using Fluxor;
 using Microsoft.Extensions.Logging;
 using StateManagementWithFluxor.Models.Todos;
 using StateManagementWithFluxor.Store.Features.Todos.Actions.LoadTodos;
@@ -25,10 +26,10 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Effects
                 _logger.LogInformation("Loading todos...");
 
                 // Add a little extra latency for dramatic effect...
-                await Task.Delay(TimeSpan.FromMilliseconds(2000));
+                await Task.Delay(TimeSpan.FromMilliseconds(1000));
                 var todosResponse = await _httpClient.GetFromJsonAsync<IEnumerable<TodoDto>>("todos");
 
-                _logger.LogInformation($"Todos loaded successfully!");
+                _logger.LogInformation("Todos loaded successfully!");
                 dispatcher.Dispatch(new LoadTodosSuccessAction(todosResponse));
             }
             catch (Exception e)

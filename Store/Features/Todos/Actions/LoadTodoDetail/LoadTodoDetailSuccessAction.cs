@@ -2,9 +2,9 @@
 
 namespace StateManagementWithFluxor.Store.Features.Todos.Actions.LoadTodoDetail
 {
-    public class LoadTodoDetailSuccess
+    public class LoadTodoDetailSuccessAction
     {
-        public LoadTodoDetailSuccess(TodoDto todo) => 
+        public LoadTodoDetailSuccessAction(TodoDto todo) => 
             Todo = todo;
 
         public TodoDto Todo { get; }

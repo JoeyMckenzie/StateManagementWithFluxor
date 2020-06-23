@@ -7,6 +7,7 @@
 
 @inject IState<TodosState> TodosState
 @inject StateFacade Facade
+@inject NavigationManager Navigation
 
 <h3 class="text-center mb-3">Todos</h3>
 
@@ -36,7 +37,7 @@ else if (TodosState.Value.HasCurrentErrors)
         <tbody>
             @foreach (var todo in TodosState.Value.CurrentTodos.Take(10))
             {
-                <tr style="cursor: pointer;">
+                <tr style="cursor: pointer;" @onclick="() => NavigateToTodoDetail(todo.Id)">
                     <td>@todo.Id</td>
                     <td>@todo.Title</td>
                     <td>@todo.Completed</td>
@@ -51,18 +52,23 @@ else if (TodosState.Value.HasCurrentErrors)
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => base.OnInitialized());
-
         // Issue the load todos command, if no current todos have been loaded
         if (TodosState.Value.CurrentTodos is null)
         {
             Facade.LoadTodos();
         }
+
+        await Task.Run(() => base.OnInitialized());
     }
 
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
+    }
+
+    public void NavigateToTodoDetail(int id)
+    {
+        Navigation.NavigateTo($"todos/{id}");
     }
 
 }

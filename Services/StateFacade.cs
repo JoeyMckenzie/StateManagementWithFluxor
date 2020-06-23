@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.Extensions.Logging;
+using StateManagementWithFluxor.Store.Features.Todos.Actions.LoadTodoDetail;
 using StateManagementWithFluxor.Store.Features.Todos.Actions.LoadTodos;
 
 namespace StateManagementWithFluxor.Services
@@ -14,8 +15,14 @@ namespace StateManagementWithFluxor.Services
 
         public void LoadTodos()
         {
-            _logger.LogInformation("Issuing action to load todods...");
+            _logger.LogInformation("Issuing action to load todos...");
             _dispatcher.Dispatch(new LoadTodosAction());
+        }
+
+        public void LoadTodoById(int id)
+        {
+            _logger.LogInformation($"Issuing action to load todo {id}...");
+            _dispatcher.Dispatch(new LoadTodoDetailAction(id));
         }
     }
 }
