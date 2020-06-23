@@ -1,0 +1,69 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@page "/todos"
+
+@using StateManagementWithFluxor.Store.State
+@using StateManagementWithFluxor.Services
+
+@inject HttpClient HttpClient
+@inject IState<TodosState> TodosState
+@inject StateFacade Facade
+
+<h3 class="text-center mb-3">Todos</h3>
+
+@if (TodosState.Value.IsLoading)
+{
+    <div class="d-flex flex-row justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+}
+else if (TodosState.Value.HasCurrentErrors)
+{
+    <span>Whoops! Looks like an issue occurred loading todos :(</span>
+}
+@if (!(TodosState.Value.CurrentTodos is null) && TodosState.Value.CurrentTodos.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Completed</th>
+                <th scope="col">User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in TodosState.Value.CurrentTodos.Take(10))
+            {
+                <tr>
+                    <td>@todo.Id</td>
+                    <td>@todo.Title</td>
+                    <td>@todo.Completed</td>
+                    <td>@todo.UserId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => base.OnInitialized());
+
+        // Issue the load todos command, if no current todos have been loaded
+        if (TodosState.Value.CurrentTodos is null)
+        {
+            Facade.LoadTodos();
+        }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+    }
+
+}

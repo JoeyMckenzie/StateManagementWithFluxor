@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorLayout
 
 <div class="sidebar">
     <NavMenu />
@@ -13,3 +13,17 @@
         @Body
     </div>
 </div>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => base.OnInitialized());
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+    }
+
+}
