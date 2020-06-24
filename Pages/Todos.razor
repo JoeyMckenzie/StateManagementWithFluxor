@@ -35,7 +35,7 @@ else if (TodosState.Value.HasCurrentErrors)
             </tr>
         </thead>
         <tbody>
-            @foreach (var todo in TodosState.Value.CurrentTodos.Take(10))
+            @foreach (var todo in TodosState.Value.CurrentTodos)
             {
                 <tr style="cursor: pointer;" @onclick="() => NavigateToTodoDetail(todo.Id)">
                     <td>@todo.Id</td>
