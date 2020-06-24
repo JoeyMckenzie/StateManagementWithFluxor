@@ -50,7 +50,7 @@ else if (TodosState.Value.HasCurrentErrors)
 
 @code {
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         // Issue the load todos command, if no current todos have been loaded
         if (TodosState.Value.CurrentTodos is null)
@@ -58,12 +58,7 @@ else if (TodosState.Value.HasCurrentErrors)
             Facade.LoadTodos();
         }
 
-        await Task.Run(() => base.OnInitialized());
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
+        base.OnInitialized();
     }
 
     public void NavigateToTodoDetail(int id)

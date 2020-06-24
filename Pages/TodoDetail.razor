@@ -50,7 +50,7 @@ else
     [Parameter]
     public string? TodoId { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         // Load the todo detail on initial page navigation
         if (int.TryParse(TodoId, out var parsedId))
@@ -58,12 +58,7 @@ else
             Facade.LoadTodoById(parsedId);
         }
 
-        await Task.Run(() => base.OnInitialized());
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
+        base.OnInitialized();
     }
 
 }

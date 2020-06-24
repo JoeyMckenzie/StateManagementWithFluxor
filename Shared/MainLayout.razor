@@ -16,14 +16,9 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await Task.Run(() => base.OnInitialized());
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
+        base.OnInitialized();
     }
 
 }
