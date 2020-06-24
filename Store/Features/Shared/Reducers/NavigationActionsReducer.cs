@@ -4,10 +4,10 @@ using StateManagementWithFluxor.Store.State;
 
 namespace StateManagementWithFluxor.Store.Features.Shared.Reducers
 {
-    public static class NaviagtionActionsReducer
+    public static class NavigationActionsReducer
     {
         [ReducerMethod]
         public static TodosState ReduceNavigationAction(TodosState state, GoAction _) =>
-            new TodosState(false, null, state.CurrentTodos, state.CurrentTodo);
+            new TodosState(state.IsLoading, null, state.CurrentTodos, state.CurrentTodo);
     }
 }

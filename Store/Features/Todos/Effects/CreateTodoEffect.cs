@@ -30,7 +30,7 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Effects.CreateTodo
                     throw new HttpRequestException($"Error creating todo: {createResponse.ReasonPhrase}");
                 }
 
-                _logger.LogInformation($"Todo created successfully!");
+                _logger.LogInformation("Todo created successfully!");
                 var createdTodo = await createResponse.Content.ReadFromJsonAsync<TodoDto>();
                 dispatcher.Dispatch(new CreateTodoSuccessAction(createdTodo));
             }

@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StateManagementWithFluxor.Models.Todos.Validation
 {
-    public class CreateTodoValidationModel
+    public class CreateOrUpdateTodoValidationModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Your todo must have a title")]
         public string? Title { get; set; }

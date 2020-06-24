@@ -7,7 +7,9 @@
 
 <EditForm Model="validationModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
-    <ValidationSummary />
+    <div class="d-flex flex-column align-items-center">
+        <ValidationSummary />
+    </div>
 
     <div class="row justify-content-center">
         <div class="form-group px-2">
@@ -32,7 +34,7 @@
 
 @code {
 
-    private CreateTodoValidationModel validationModel = new CreateTodoValidationModel();
+    private CreateOrUpdateTodoValidationModel validationModel = new CreateOrUpdateTodoValidationModel();
 
     protected override void OnInitialized()
     {

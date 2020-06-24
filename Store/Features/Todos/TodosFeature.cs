@@ -8,6 +8,6 @@ namespace StateManagementWithFluxor.Store.Features.Todos
         public override string GetName() => "Todos";
 
         protected override TodosState GetInitialState() =>
-            new TodosState(false, null, null, null);
+            new TodosState(true, null, null, null);
     }
 }
