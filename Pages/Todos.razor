@@ -2,6 +2,7 @@
 
 @page "/todos"
 
+@using StateManagementWithFluxor.Components
 @using StateManagementWithFluxor.Store.State
 @using StateManagementWithFluxor.Services
 
@@ -23,9 +24,11 @@ else if (TodosState.Value.HasCurrentErrors)
 {
     <span>Whoops! Looks like an issue occurred loading todos :(</span>
 }
-@if (!(TodosState.Value.CurrentTodos is null) && TodosState.Value.CurrentTodos.Any())
+else if (!(TodosState.Value.CurrentTodos is null) && TodosState.Value.CurrentTodos.Any())
 {
-    <table class="table table-hover">
+    <CreateTodoForm />
+
+    <table class="table table-hover mt-2">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -50,7 +53,7 @@ else if (TodosState.Value.HasCurrentErrors)
 
 @code {
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         // Issue the load todos command, if no current todos have been loaded
         if (TodosState.Value.CurrentTodos is null)
@@ -58,12 +61,7 @@ else if (TodosState.Value.HasCurrentErrors)
             Facade.LoadTodos();
         }
 
-        await Task.Run(() => base.OnInitialized());
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
+        base.OnInitialized();
     }
 
     public void NavigateToTodoDetail(int id)

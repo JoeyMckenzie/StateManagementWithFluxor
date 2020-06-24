@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace StateManagementWithFluxor.Models.Todos.Validation
 {
@@ -11,6 +12,7 @@ namespace StateManagementWithFluxor.Models.Todos.Validation
         public bool Completed { get; set; }
 
         [Required(ErrorMessage = "User ID associated with this todo is requied")]
+        [Range(1, 100)]
         public int UserId { get; set; }
     }
 }

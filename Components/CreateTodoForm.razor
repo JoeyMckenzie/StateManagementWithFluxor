@@ -1,15 +1,27 @@
-﻿@using StateManagementWithFluxor.Models.Todos.Validation
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<h3 class="text-center">Create a Todo</h3>
+@using StateManagementWithFluxor.Models.Todos.Validation
+@using StateManagementWithFluxor.Services
 
-<EditForm Model="validationModel" class="form-group">
+@inject StateFacade Facade
+
+<EditForm Model="validationModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="row justify-content-around">
-        <InputText id="create-todo-title" @bind-Value="validationModel.Title" class="form-control"/>
-        <InputCheckbox id="create-todo-completed" @bind-Value="validationModel.Completed" class="form-check-input"/>
-        <InputNumber id="create-todo-user-id" @bind-Value="validationModel.UserId" class="form-control"/>
+    <div class="row justify-content-center">
+        <div class="form-group px-2">
+            <label for="create-todo-title">Title</label>
+            <InputText  id="create-todo-title"  @bind-Value="validationModel.Title" class="form-control"/>
+        </div>
+        <div class="form-group px-2">
+            <label for="create-todo-completed">User ID</label>
+            <InputNumber ParsingErrorMessage="That is not a valid user ID" id="create-todo-user-id" @bind-Value="validationModel.UserId" class="form-control"/>
+        </div>
+        <div class="form-group px-2 mt-4 d-flex flex-column align-items-center">
+            <label for="create-todo-completed">Completed?</label>
+            <InputCheckbox id="create-todo-completed" @bind-Value="validationModel.Completed" class="form-check"/>
+        </div>
     </div>
 
     <div class="d-flex flex-row justify-content-center">
@@ -22,9 +34,17 @@
 
     private CreateTodoValidationModel validationModel = new CreateTodoValidationModel();
 
-    public void OnValidSubmit()
+    protected override void OnInitialized()
     {
+        validationModel.UserId = 1;
 
+        base.OnInitialized();
+    }
+
+    private void HandleValidSubmit()
+    {
+        // We use the bang operator (!) to tell the compiler we'll know this string field will not be null
+        Facade.CreateTodo(validationModel.Title!, validationModel.Completed, validationModel.UserId);
     }
 
 }

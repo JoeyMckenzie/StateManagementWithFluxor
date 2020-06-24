@@ -20,7 +20,12 @@
 }
 else if (TodosState.Value.HasCurrentErrors || TodosState.Value.CurrentTodo is null)
 {
-    <span>Whoops! Looks like an issue occurred loading todos :(</span>
+    <div class="d-flex flex-column align-items-center">
+        <span>Whoops! Looks like an issue occurred loading todos :(</span>
+        <div class="py-3">
+            <a class="btn btn-primary" href="/todos">Back to Todos</a>
+        </div>
+    </div>
 }
 else
 {
@@ -50,7 +55,7 @@ else
     [Parameter]
     public string? TodoId { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         // Load the todo detail on initial page navigation
         if (int.TryParse(TodoId, out var parsedId))
@@ -58,12 +63,7 @@ else
             Facade.LoadTodoById(parsedId);
         }
 
-        await Task.Run(() => base.OnInitialized());
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
+        base.OnInitialized();
     }
 
 }
