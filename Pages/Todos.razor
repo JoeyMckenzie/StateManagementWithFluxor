@@ -2,6 +2,7 @@
 
 @page "/todos"
 
+@using StateManagementWithFluxor.Components
 @using StateManagementWithFluxor.Store.State
 @using StateManagementWithFluxor.Services
 
@@ -19,13 +20,27 @@
         </div>
     </div>
 }
-else if (TodosState.Value.HasCurrentErrors)
+else if (TodosState.Value.HasCurrentErrors || TodosState.Value.CurrentTodos is null)
 {
-    <span>Whoops! Looks like an issue occurred loading todos :(</span>
+    <div class="d-flex flex-column align-items-center">
+        <span class="py-2">Whoops! Looks like an issue occurred loading todos :(</span>
+        <button class="btn btn-info py-2" @onclick="() => Facade.LoadTodos()">Reload Todos</button>
+    </div>
 }
-@if (!(TodosState.Value.CurrentTodos is null) && TodosState.Value.CurrentTodos.Any())
+else if (!TodosState.Value.CurrentTodos.Any())
 {
-    <table class="table table-hover">
+    <CreateTodoForm />
+
+    <div class="d-flex flex-column align-items-center mt-2">
+        <span class="py-2">Looks like there's no todos...</span>
+        <button class="btn btn-info py-2" @onclick="() => Facade.LoadTodos()">Reload Todos</button>
+    </div>
+}
+else
+{
+    <CreateTodoForm />
+
+    <table class="table table-hover mt-2">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -35,7 +50,7 @@ else if (TodosState.Value.HasCurrentErrors)
             </tr>
         </thead>
         <tbody>
-            @foreach (var todo in TodosState.Value.CurrentTodos.Take(10))
+            @foreach (var todo in TodosState.Value.CurrentTodos)
             {
                 <tr style="cursor: pointer;" @onclick="() => NavigateToTodoDetail(todo.Id)">
                     <td>@todo.Id</td>

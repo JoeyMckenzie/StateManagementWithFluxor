@@ -1,4 +1,4 @@
-﻿using StateManagementWithFluxor.Models.Todos;
+﻿using StateManagementWithFluxor.Models.Todos.Dtos;
 
 namespace StateManagementWithFluxor.Store.Features.Todos.Actions.LoadTodoDetail
 {

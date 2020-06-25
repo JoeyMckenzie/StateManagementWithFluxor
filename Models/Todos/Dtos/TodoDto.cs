@@ -1,4 +1,4 @@
-﻿namespace StateManagementWithFluxor.Models.Todos
+﻿namespace StateManagementWithFluxor.Models.Todos.Dtos
 {
     public class TodoDto
     {

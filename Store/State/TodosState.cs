@@ -1,4 +1,4 @@
-﻿using StateManagementWithFluxor.Models.Todos;
+﻿using StateManagementWithFluxor.Models.Todos.Dtos;
 using System.Collections.Generic;
 
 namespace StateManagementWithFluxor.Store.State

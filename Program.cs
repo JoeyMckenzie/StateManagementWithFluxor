@@ -1,11 +1,11 @@
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Fluxor;
 using System.Reflection;
 using StateManagementWithFluxor.Services;
+using System.Net.Mime;
 
 namespace StateManagementWithFluxor
 {
@@ -16,8 +16,6 @@ namespace StateManagementWithFluxor
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://jsonplaceholder.typicode.com") });
-
             // Add Fluxor
             builder.Services.AddFluxor(options => 
             {
@@ -27,6 +25,11 @@ namespace StateManagementWithFluxor
 
             // Add custom application services
             builder.Services.AddScoped<StateFacade>();
+            builder.Services.AddHttpClient<JsonPlaceholderApiService>(client =>
+            {
+                client.DefaultRequestHeaders.Add("Content-Control", $"{MediaTypeNames.Application.Json}; charset=utf-8");
+                client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com");
+            });
 
             await builder.Build().RunAsync();
         }
