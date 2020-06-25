@@ -42,7 +42,7 @@ else
 
     <table class="table table-hover mt-2">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Completed</th>
@@ -52,7 +52,7 @@ else
         <tbody>
             @foreach (var todo in TodosState.Value.CurrentTodos)
             {
-                <tr style="cursor: pointer;" @onclick="() => NavigateToTodoDetail(todo.Id)">
+                <tr style="cursor: pointer;" class="text-center" @onclick="() => NavigateToTodoDetail(todo.Id)">
                     <td>@todo.Id</td>
                     <td>@todo.Title</td>
                     <td>@todo.Completed</td>

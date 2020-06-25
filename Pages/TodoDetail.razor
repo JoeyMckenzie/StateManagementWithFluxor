@@ -36,24 +36,24 @@ else
             <ValidationSummary />
         </div>
 
-        <div class="d-flex flex-column align-items-center justify-content-center py-1">
-            <div class="row form-group">
+        <div class="d-flex flex-column align-items-center py-1">
+            <div class="d-flex flex-row py-2">
                 <strong>ID</strong>: @TodosState.Value.CurrentTodo.Id
             </div>
-            <div class="form-group d-flex flex-row align-items-center justify-content-center">
-                <strong class="px-2">User:</strong> 
-                <InputNumber class="form-control" @bind-Value="validationModel.UserId"/>
-            </div>
-            <div class="form-group d-flex flex-row align-items-center justify-content-center">
-                <strong class="px-2">Title:</strong> 
-                <InputText class="form-control" @bind-Value="validationModel.Title"/>
-            </div>
-            <div class="form-group d-flex flex-row align-items-center justify-content-center">
+            <div class="py-2 d-flex flex-row align-items-center">
                 <strong class="px-2">Completed:</strong> 
                 <InputCheckbox class="form-check" @bind-Value="validationModel.Completed" />
             </div>
+            <div class="py-2 d-flex flex-row align-items-center">
+                <strong class="px-2">User:</strong> 
+                <InputNumber class="form-control" @bind-Value="validationModel.UserId"/>
+            </div>
+            <div class="py-2 d-flex flex-row align-items-center">
+                <strong class="px-2">Title:</strong> 
+                <InputText class="form-control" @bind-Value="validationModel.Title"/>
+            </div>
 
-            <div class="row justify-content-center pt-2">
+            <div class="d-flex flex-row justify-content-center pt-2">
                 <button type="submit" class="btn btn-secondary">Update</button>
                 <span class="px-2"></span>
                 <button class="btn btn-danger" @onclick="() => Facade.DeleteTodo(TodosState.Value.CurrentTodo.Id)">Delete</button>
