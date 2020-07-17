@@ -1,4 +1,4 @@
-﻿@inherits Fluxor.Blazor.Web.Components.FluxorLayout
+﻿@inherits LayoutComponentBase
 
 <div class="sidebar">
     <NavMenu />
@@ -13,11 +13,3 @@
         @Body
     </div>
 </div>
-
-@code {        
-    
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-    }
-}

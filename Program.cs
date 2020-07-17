@@ -17,7 +17,7 @@ namespace StateManagementWithFluxor
             builder.RootComponents.Add<App>("app");
 
             // Add Fluxor
-            builder.Services.AddFluxor(options => 
+            builder.Services.AddFluxor(options =>
             {
                 options.ScanAssemblies(Assembly.GetExecutingAssembly());
                 options.UseReduxDevTools();
