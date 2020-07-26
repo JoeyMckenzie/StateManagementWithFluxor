@@ -2,7 +2,7 @@
 {
     public class DeleteTodoAction
     {
-        public DeleteTodoAction(int id) => 
+        public DeleteTodoAction(int id) =>
             Id = id;
 
         public int Id { get; }
