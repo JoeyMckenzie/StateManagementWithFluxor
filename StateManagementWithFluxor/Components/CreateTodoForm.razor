@@ -1,0 +1,52 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@using StateManagementWithFluxor.Models.Todos.Validation
+@using StateManagementWithFluxor.Services
+
+@inject StateFacade Facade
+
+<EditForm Model="validationModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="d-flex flex-column align-items-center">
+        <ValidationSummary />
+    </div>
+
+    <div class="d-flex flex-row justify-content-center">
+        <div class="form-group px-2">
+            <label for="create-todo-title">Title</label>
+            <InputText  id="create-todo-title"  @bind-Value="validationModel.Title" class="form-control"/>
+        </div>
+        <div class="form-group px-2">
+            <label for="create-todo-completed">User ID</label>
+            <InputNumber ParsingErrorMessage="That is not a valid user ID" id="create-todo-user-id" @bind-Value="validationModel.UserId" class="form-control"/>
+        </div>
+        <div class="form-group px-2 mt-3 d-flex flex-column align-items-center">
+            <label for="create-todo-completed">Completed?</label>
+            <InputCheckbox id="create-todo-completed" @bind-Value="validationModel.Completed" class="form-check"/>
+        </div>
+    </div>
+
+    <div class="pt-2 d-flex flex-row justify-content-center">
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+</EditForm>
+
+
+@code {
+
+    private CreateOrUpdateTodoValidationModel validationModel = new CreateOrUpdateTodoValidationModel();
+
+    protected override void OnInitialized()
+    {
+        validationModel.UserId = 1;
+
+        base.OnInitialized();
+    }
+
+    private void HandleValidSubmit()
+    {
+        // We use the bang operator (!) to tell the compiler we'll know this string field will not be null
+        Facade.CreateTodo(validationModel.Title!, validationModel.Completed, validationModel.UserId);
+    }
+
+}

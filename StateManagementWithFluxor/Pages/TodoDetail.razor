@@ -1,0 +1,114 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@page "/todos/{todoId}"
+
+@using StateManagementWithFluxor.Models.Todos.Validation
+@using StateManagementWithFluxor.Store.State
+@using StateManagementWithFluxor.Services
+
+@inject IState<TodosState> TodosState
+@inject StateFacade Facade
+
+<h3 class="text-center mb-3">Detail for todo item @TodoId</h3>
+
+@if (TodosState.Value.IsLoading)
+{
+    <div class="d-flex flex-row justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+}
+else if (TodosState.Value.HasCurrentErrors || TodosState.Value.CurrentTodo is null)
+{
+    <div class="d-flex flex-column align-items-center">
+        <span>Whoops! Looks like an issue occurred loading todos :(</span>
+        <div class="py-3">
+            <a class="btn btn-primary" href="/todos">Back to Todos</a>
+        </div>
+    </div>
+}
+else
+{
+    <EditForm Model="validationModel" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="d-flex flex-column align-items-center">
+            <ValidationSummary />
+        </div>
+
+        <div class="d-flex flex-column align-items-center py-1">
+            <div class="d-flex flex-row py-2">
+                <strong>ID</strong>: @TodosState.Value.CurrentTodo.Id
+            </div>
+            <div class="py-2 d-flex flex-row align-items-center">
+                <strong class="px-2">Completed:</strong> 
+                <InputCheckbox class="form-check" @bind-Value="validationModel.Completed" />
+            </div>
+            <div class="py-2 d-flex flex-row align-items-center">
+                <strong class="px-2">User:</strong> 
+                <InputNumber class="form-control" @bind-Value="validationModel.UserId"/>
+            </div>
+            <div class="py-2 d-flex flex-row align-items-center">
+                <strong class="px-2">Title:</strong> 
+                <InputText class="form-control" @bind-Value="validationModel.Title"/>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center pt-2">
+                <button type="submit" class="btn btn-secondary">Update</button>
+                <span class="px-2"></span>
+                <button class="btn btn-danger" @onclick="() => Facade.DeleteTodo(TodosState.Value.CurrentTodo.Id)">Delete</button>
+            </div>
+
+            <div class="py-3">
+                <a class="btn btn-primary" href="/todos">Back to Todos</a>
+            </div>
+        </div>
+    </EditForm>
+
+}
+
+@code {
+
+    private CreateOrUpdateTodoValidationModel validationModel = new CreateOrUpdateTodoValidationModel();
+
+    [Parameter]
+    public string? TodoId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Load the todo detail on initial page navigation
+        if (int.TryParse(TodoId, out var parsedId))
+        {
+            Facade.LoadTodoById(parsedId);
+        }
+
+        // Register a state change to assign the validation fields
+        TodosState.StateChanged += (sender, state) =>
+        {
+            if (state.CurrentTodo is null)
+            {
+                return;
+            }
+
+            validationModel.Title = state.CurrentTodo.Title;
+            validationModel.Completed = state.CurrentTodo.Completed;
+            validationModel.UserId = state.CurrentTodo.UserId;
+
+            StateHasChanged();
+        };
+
+        base.OnInitialized();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+    }
+
+    private void HandleValidSubmit()
+    {
+        // We use the bang operator (!) to tell the compiler we'll know this string field will not be null
+        Facade.UpdateTodo(TodosState.Value.CurrentTodo!.Id, validationModel.Title!, validationModel.Completed, validationModel.UserId);
+    }
+
+}
