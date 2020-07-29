@@ -7,10 +7,10 @@ namespace StateManagementWithFluxor.Models.Todos.Validation
         [Required(AllowEmptyStrings = false, ErrorMessage = "Your todo must have a title")]
         public string? Title { get; set; }
 
-        [Required(ErrorMessage = "Status of this todo is requied")]
+        [Required(ErrorMessage = "Status of this todo is required")]
         public bool Completed { get; set; }
 
-        [Required(ErrorMessage = "User ID associated with this todo is requied")]
+        [Required(ErrorMessage = "User ID associated with this todo is required")]
         [Range(1, 100)]
         public int UserId { get; set; }
     }

@@ -16,7 +16,7 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Reducers
         [ReducerMethod]
         public static TodosState ReduceCreateTodoSuccessAction(TodosState state, CreateTodoSuccessAction action)
         {
-            // Grab a reference to the current todo list, or initalize one if we do not currently have any loaded
+            // Grab a reference to the current todo list, or initialize one if we do not currently have any loaded
             var currentTodos = state.CurrentTodos is null ?
                 new List<TodoDto>() :
                 state.CurrentTodos.ToList();

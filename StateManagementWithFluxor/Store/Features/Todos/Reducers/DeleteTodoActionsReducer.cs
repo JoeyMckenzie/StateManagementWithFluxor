@@ -8,11 +8,11 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Reducers
     public static class DeleteTodoActionsReducer
     {
         [ReducerMethod]
-        public static TodosState ReduceCreateTodoAction(TodosState state, DeleteTodoAction _) =>
+        public static TodosState ReduceDeletTodoAction(TodosState state, DeleteTodoAction _) =>
             new TodosState(true, null, state.CurrentTodos, state.CurrentTodo);
 
         [ReducerMethod]
-        public static TodosState ReduceCreateTodoSuccessAction(TodosState state, DeleteTodoSuccessAction action)
+        public static TodosState ReduceDeleteTodoSuccessAction(TodosState state, DeleteTodoSuccessAction action)
         {
             // Return the default state if no list of todos is found
             if (state.CurrentTodos is null)
@@ -27,7 +27,7 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Reducers
         }
 
         [ReducerMethod]
-        public static TodosState ReduceCreateTodoFailureAction(TodosState state, DeleteTodoFailureAction action) =>
+        public static TodosState ReduceDeleteTodoFailureAction(TodosState state, DeleteTodoFailureAction action) =>
             new TodosState(false, action.ErrorMessage, state.CurrentTodos, state.CurrentTodo);
     }
 }
