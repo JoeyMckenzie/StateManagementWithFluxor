@@ -16,7 +16,7 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Effects
 
         protected override Task HandleAsync(DeleteTodoSuccessAction action, IDispatcher dispatcher)
         {
-            _logger.LogInformation("Deleleted todo successfully, navigating back to todo listing...");
+            _logger.LogInformation("Deleted todo successfully, navigating back to todo listing...");
             _navigation.NavigateTo("todos");
 
             return Task.CompletedTask;
