@@ -3,7 +3,7 @@
 @using StateManagementWithFluxor.Models.Todos.Validation
 @using StateManagementWithFluxor.Services
 
-@inject StateFacade Facade
+@inject IStateFacade Facade
 
 <EditForm Model="validationModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />

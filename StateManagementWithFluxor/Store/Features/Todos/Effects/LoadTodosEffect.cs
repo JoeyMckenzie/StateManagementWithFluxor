@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 
 namespace StateManagementWithFluxor.Store.Features.Todos.Effects
 {
-    public class LoadTodosEffect : Effect<LoadTodosAction>
+    public class LoadTodosEffect
     {
         private readonly ILogger<LoadTodosEffect> _logger;
-        private readonly JsonPlaceholderApiService _apiService;
+        private readonly IJsonPlaceholderApiService _apiService;
 
-        public LoadTodosEffect(ILogger<LoadTodosEffect> logger, JsonPlaceholderApiService httpClient) =>
-            (_logger, _apiService) = (logger, httpClient);
+        public LoadTodosEffect(ILogger<LoadTodosEffect> logger, IJsonPlaceholderApiService apiService) =>
+            (_logger, _apiService) = (logger, apiService);
 
-        protected override async Task HandleAsync(LoadTodosAction action, IDispatcher dispatcher)
+        [EffectMethod]
+        public async Task HandleAsync(LoadTodosAction _, IDispatcher dispatcher)
         {
             try
             {
@@ -33,7 +34,6 @@ namespace StateManagementWithFluxor.Store.Features.Todos.Effects
                 _logger.LogError($"Error loading todos, reason: {e.Message}");
                 dispatcher.Dispatch(new LoadTodosFailureAction(e.Message));
             }
-
         }
     }
 }

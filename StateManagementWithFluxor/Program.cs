@@ -24,8 +24,8 @@ namespace StateManagementWithFluxor
             });
 
             // Add custom application services
-            builder.Services.AddScoped<StateFacade>();
-            builder.Services.AddHttpClient<JsonPlaceholderApiService>(client =>
+            builder.Services.AddScoped<IStateFacade>();
+            builder.Services.AddHttpClient<IJsonPlaceholderApiService, JsonPlaceholderApiService>(client =>
             {
                 client.DefaultRequestHeaders.Add("Content-Control", $"{MediaTypeNames.Application.Json}; charset=utf-8");
                 client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com");

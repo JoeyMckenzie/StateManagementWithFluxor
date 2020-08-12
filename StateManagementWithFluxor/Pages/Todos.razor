@@ -6,13 +6,13 @@
 @using StateManagementWithFluxor.Store.State
 @using StateManagementWithFluxor.Services
 
-@inject IState<TodosState> TodosState
-@inject StateFacade Facade
+@inject IState<TodosState> State
+@inject IStateFacade Facade
 @inject NavigationManager Navigation
 
 <h3 class="text-center mb-3">Todos</h3>
 
-@if (TodosState.Value.IsLoading)
+@if (State.Value.IsLoading)
 {
     <div class="d-flex flex-row justify-content-center">
         <div class="spinner-border" role="status">
@@ -20,20 +20,20 @@
         </div>
     </div>
 }
-else if (TodosState.Value.HasCurrentErrors || TodosState.Value.CurrentTodos is null)
+else if (State.Value.HasCurrentErrors || State.Value.CurrentTodos is null)
 {
     <div class="d-flex flex-column align-items-center">
         <span class="py-2">Whoops! Looks like an issue occurred loading todos :(</span>
-        <button class="btn btn-info py-2" @onclick="() => Facade.LoadTodos()">Reload Todos</button>
+        <button id="reload-todos-button" class="btn btn-info py-2" @onclick="() => Facade.LoadTodos()">Reload Todos</button>
     </div>
 }
-else if (!TodosState.Value.CurrentTodos.Any())
+else if (!State.Value.CurrentTodos.Any())
 {
     <CreateTodoForm />
 
     <div class="d-flex flex-column align-items-center mt-2">
         <span class="py-2">Looks like there's no todos...</span>
-        <button class="btn btn-info py-2" @onclick="() => Facade.LoadTodos()">Reload Todos</button>
+        <button id="reload-todos-button" class="btn btn-info py-2" @onclick="() => Facade.LoadTodos()">Reload Todos</button>
     </div>
 }
 else
@@ -50,13 +50,13 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var todo in TodosState.Value.CurrentTodos)
+            @foreach (var todo in State.Value.CurrentTodos)
             {
                 <tr style="cursor: pointer;" class="text-center" @onclick="() => NavigateToTodoDetail(todo.Id)">
-                    <td>@todo.Id</td>
-                    <td>@todo.Title</td>
-                    <td>@todo.Completed</td>
-                    <td>@todo.UserId</td>
+                    <td id="todo-id-@todo.Id">@todo.Id</td>
+                    <td id="todo-id-@todo.Id-title">@todo.Title</td>
+                    <td id="todo-id-@todo.Id-completed">@todo.Completed</td>
+                    <td id="todo-id-@todo.Id-user-id">@todo.UserId</td>
                 </tr>
             }
         </tbody>
@@ -68,7 +68,7 @@ else
     protected override void OnInitialized()
     {
         // Issue the load todos command, if no current todos have been loaded
-        if (TodosState.Value.CurrentTodos is null)
+        if (State.Value.CurrentTodos is null)
         {
             Facade.LoadTodos();
         }

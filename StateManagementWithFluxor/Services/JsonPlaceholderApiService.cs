@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StateManagementWithFluxor.Services
 {
-    public class JsonPlaceholderApiService
+    public class JsonPlaceholderApiService : IJsonPlaceholderApiService
     {
         private readonly ILogger<JsonPlaceholderApiService> _logger;
         private readonly HttpClient _httpClient;

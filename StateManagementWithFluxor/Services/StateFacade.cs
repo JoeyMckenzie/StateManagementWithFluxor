@@ -9,7 +9,7 @@ using StateManagementWithFluxor.Store.Features.Todos.Actions.UpdateTodo;
 
 namespace StateManagementWithFluxor.Services
 {
-    public class StateFacade
+    public class StateFacade : IStateFacade
     {
         private readonly ILogger<StateFacade> _logger;
         private readonly IDispatcher _dispatcher;
